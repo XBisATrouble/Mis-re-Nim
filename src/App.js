@@ -1,18 +1,32 @@
 import React from "react";
 import "./App.css";
 import { connect } from "react-redux";
-import { reduceToken } from "./actions/reduceToken";
+import { reduceTokenHuman, reduceTokenComputer } from "./actions/reduceToken";
 import { resetGame } from "./actions/resetGame";
 
 class App extends React.Component {
   render() {
-    const { firstPlayer, token, winCondition } = this.props;
-    console.log("this.firstPlayer", firstPlayer);
+    const { humanPlayer, token, winCondition, log } = this.props;
+    console.log("this.humanPlayer", humanPlayer);
     console.log("this.token", token);
     console.log("winCondition", winCondition);
+    console.log("log", log);
+
+    const writeLog = log.map((logElement, index) => {
+      const player = logElement.humanPlayer
+        ? "Menschlicher Spieler"
+        : "Computer";
+      const matches = logElement.n === 1 ? "Streichholz" : "Streichhölzer";
+      return (
+        <p key={index}>
+          {player} hat {logElement.n} {matches} gezogen.
+        </p>
+      );
+    });
+
     return (
       <div className="App">
-        <div>Current Player: {firstPlayer ? "1" : "2"}</div>
+        <div>Current Player: {humanPlayer ? "1" : "2"}</div>
         <div>{token}</div>
         <button disabled={token < 1} onClick={() => this.props.reduceToken(1)}>
           1
@@ -26,12 +40,13 @@ class App extends React.Component {
         {winCondition ? (
           <div>
             <div>
-              {" "}
-              Spieler {firstPlayer ? "1" : "2"} hat gewonnen. Glückwunsch!{" "}
+              {humanPlayer ? "Menschlicher Spieler" : "Computer"} hat gewonnen.
+              Glückwunsch!
             </div>
             <button onClick={() => this.props.resetGame()}>Reset game</button>
           </div>
         ) : null}
+        {writeLog}
       </div>
     );
   }
@@ -39,16 +54,18 @@ class App extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    firstPlayer: state.firstPlayer,
+    humanPlayer: state.humanPlayer,
     token: state.token,
     winCondition: state.winCondition,
+    log: state.log,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     reduceToken: (n) => {
-      dispatch(reduceToken(n));
+      dispatch(reduceTokenHuman(n));
+      dispatch(reduceTokenComputer());
     },
     resetGame: () => {
       dispatch(resetGame());
