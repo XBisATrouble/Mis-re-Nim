@@ -7,11 +7,8 @@ import { resetGame } from "./actions/resetGame";
 class App extends React.Component {
   render() {
     const { humanPlayer, token, winCondition, log } = this.props;
-    console.log("this.humanPlayer", humanPlayer);
-    console.log("this.token", token);
-    console.log("winCondition", winCondition);
-    console.log("log", log);
 
+    // Displays log entries, the curent one at the top
     const writeLog = log.map((logElement, index) => {
       const player = logElement.humanPlayer
         ? "Menschlicher Spieler"
@@ -65,6 +62,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     reduceToken: (n) => {
       dispatch(reduceTokenHuman(n));
+      // No usage of thunks necessary;dispatches are synchron = sequential (neede for computer move)
       dispatch(reduceTokenComputer());
     },
     resetGame: () => {
