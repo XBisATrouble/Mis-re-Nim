@@ -3,14 +3,17 @@ const initialState = {
   token: 13,
   winCondition: false,
   log: [],
+  // Makes switch between an win orientated and and random computer possible; not yet implemented
   optimalStrategy: true,
 };
 
-const reduceTokenComputer = (token) => {
+// Function for random computer move (number between 1 and 3) for normal computer opponent
+export const reduceTokenComputer = (token) => {
   return Math.floor(Math.random() * Math.min(token, 3) + 1);
 };
 
-const reduceTokenSmartComputer = (token) => {
+// Function for smart computer that leads to win
+export const reduceTokenSmartComputer = (token) => {
   const n = (token - 1) % 4;
   if (n === 0) {
     return reduceTokenComputer(token);
@@ -19,7 +22,8 @@ const reduceTokenSmartComputer = (token) => {
   }
 };
 
-const rootReducer = (state = initialState, action) => {
+// Function that handles the switch of human and computer moves
+export const rootReducer = (state = initialState, action) => {
   const { humanPlayer, token, log } = state;
   switch (action.type) {
     case "REDUCE_TOKEN_HUMAN":
@@ -38,6 +42,7 @@ const rootReducer = (state = initialState, action) => {
       if (token === 0) {
         return { ...state, winCondition: true };
       } else {
+        // Makes switch between an win orientated and and random computer possible; not yet implemented
         const computerN = state.optimalStrategy
           ? reduceTokenSmartComputer(token)
           : reduceTokenComputer(token);
