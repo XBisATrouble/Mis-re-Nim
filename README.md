@@ -21,6 +21,3 @@ To run the game in development mode clone the repository and run
 
 in the project directory. Open http://localhost:3000 to view it in the browser.
 
-## Description
-
-
