@@ -3,7 +3,7 @@ const initialState = {
   token: 13,
   winCondition: false,
   log: [],
-  // Makes switch between an win orientated and and random computer possible; not yet implemented
+  // Makes switch between win orientated and random computer possible
   optimalStrategy: true,
 };
 
@@ -24,7 +24,7 @@ export const reduceTokenSmartComputer = (token) => {
 
 // Function that handles the switch of human and computer moves
 export const rootReducer = (state = initialState, action) => {
-  const { humanPlayer, token, log } = state;
+  const { humanPlayer, token, log, optimalStrategy } = state;
   switch (action.type) {
     case "REDUCE_TOKEN_HUMAN":
       if (token === 0) {
@@ -54,6 +54,8 @@ export const rootReducer = (state = initialState, action) => {
           log: [{ humanPlayer, n: computerN }, ...log],
         };
       }
+    case "CHANGE_STRATEGY":
+      return { ...state, optimalStrategy: !optimalStrategy };
 
     case "RESET_GAME":
       return initialState;
