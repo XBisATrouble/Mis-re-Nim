@@ -52,13 +52,14 @@ export const rootReducer = (state = initialState, action) => {
           humanPlayer: !humanPlayer,
           token: newTokenValue,
           log: [{ humanPlayer, n: computerN }, ...log],
+          winCondition: newTokenValue === 0,
         };
       }
     case "CHANGE_STRATEGY":
       return { ...state, optimalStrategy: !optimalStrategy };
 
     case "RESET_GAME":
-      return initialState;
+      return { ...initialState, optimalStrategy };
     default:
       return state;
   }
