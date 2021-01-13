@@ -3,12 +3,8 @@
   min-height: 100vh;
 }
 
-.token-element {
-  margin: 15px
-}
-
 .container {
-  margin-top: 20px;
+  margin-top: 30px;
 }
 
 .card-panel {
@@ -17,19 +13,25 @@
   flex-direction: column;
 }
 
-.button-2{
-  margin: 0 5px 0 5px
+span {
+  font-size: 16px;
 }
 
 .flow-text {
   margin: 10px 0 10px 0
 }
 
+.token-element {
+  margin: 0 5px 0 5px;
+  cursor: default;
+  margin: 10px
+}
+
+button {
+  margin: 0 5px 0 5px
+}
+
 p {
   display: flex; 
   flex-direction: column
-}
-
-span {
-  font-size: 16px;
 }

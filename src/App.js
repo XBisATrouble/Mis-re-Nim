@@ -8,6 +8,47 @@ import "materialize-css";
 import { Switch, Button } from "react-materialize";
 
 class App extends React.Component {
+  createButtons(n, token) {
+    return [...Array(n).keys()].map((i) => {
+      const buttonValue = i + 1;
+      return (
+        <Button
+          key={i}
+          disabled={token < buttonValue}
+          node="button"
+          onClick={() => this.props.reduceToken(buttonValue)}
+          waves="light"
+        >
+          {buttonValue}
+        </Button>
+      );
+    });
+  }
+
+  createToken(token) {
+    // Create tokens
+    return [...Array(token).keys()].map((token) => {
+      return (
+        <div className="token-element btn-floating btn-large" key={token}></div>
+      );
+    });
+  }
+
+  writeLog(log) {
+    // Displays log entries, the current one at the top
+    return log.map((logElement, index) => {
+      const player = logElement.humanPlayer
+        ? "Menschlicher Spieler"
+        : "Computer";
+      const matches = logElement.n === 1 ? "Spielstein" : "Spielsteine";
+      return (
+        <span key={index}>
+          {player} hat {logElement.n} {matches} gezogen.
+        </span>
+      );
+    });
+  }
+
   render() {
     const {
       humanPlayer,
@@ -17,78 +58,32 @@ class App extends React.Component {
       optimalStrategy,
     } = this.props;
 
-    // Creates 13 tokens
-    let tokenNumber = [...Array(token).keys()].map((token) => {
-      return (
-        <div className="token-element btn-floating btn-large" key={token}></div>
-      );
-    });
-
-    // Displays log entries, the current one at the top
-    const writeLog = log.map((logElement, index) => {
-      const player = logElement.humanPlayer
-        ? "Menschlicher Spieler"
-        : "Computer";
-      const matches = logElement.n === 1 ? "Streichholz" : "Streichhölzer";
-      return (
-        <span key={index}>
-          {player} hat {logElement.n} {matches} gezogen.
-        </span>
-      );
-    });
-
     return (
       <div className="App">
         <h1>Nim Misère</h1>
         <Switch
           id="Switch-11"
-          offLabel="Smart Computer Off"
+          offLabel="Törichter Computer"
           onChange={this.props.changeStrategy}
-          onLabel="Smart Computer On"
+          onLabel="Cleverer Computer"
           checked={optimalStrategy}
         />
         <div className="container row">
           <div className="col s12">
             <div className="card-panel teal lighten-5">
-              <div className="text-grey-darken-4 flow-text">
-                Aktueller Spieler: {humanPlayer ? "Mensch" : "Computer"}
-              </div>
-              <div className="token-wrapper">{tokenNumber}</div>
+              <span className="flow-text">
+                Verbleibende Spielsteine: {token}
+              </span>
+              <div className="token-wrapper">{this.createToken(token)}</div>
             </div>
           </div>
         </div>
-        <div className="button-wrapper">
-          <Button
-            disabled={token < 1}
-            node="button"
-            onClick={() => this.props.reduceToken(1)}
-            waves="light"
-          >
-            {"1"}
-          </Button>
-          <Button
-            className="button-2"
-            disabled={token < 2}
-            node="button"
-            onClick={() => this.props.reduceToken(2)}
-            waves="light"
-          >
-            {"2"}
-          </Button>
-          <Button
-            disabled={token < 3}
-            node="button"
-            onClick={() => this.props.reduceToken(3)}
-            waves="light"
-          >
-            {"3"}
-          </Button>
-        </div>
+        <div className="button-wrapper">{this.createButtons(3, token)}</div>
         {winCondition ? (
           <div>
             <div className="text-grey-darken-4 flow-text">
               {`Der${
-                humanPlayer === true ? " menschliche Spieler " : " Computer "
+                humanPlayer ? " menschliche Spieler " : " Computer "
               }hat gewonnen. Glückwunsch!`}
             </div>
             <Button onClick={() => this.props.resetGame()}>
@@ -96,7 +91,7 @@ class App extends React.Component {
             </Button>
           </div>
         ) : null}
-        <p>{writeLog}</p>
+        <p>{this.writeLog(log)}</p>
       </div>
     );
   }
