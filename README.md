@@ -7,15 +7,24 @@ The player can choose whether he wants to play against a simple computer opponen
 ## This game was developed with:
 
 * React.js
-* CSS
+* Redux
 * JavaScript
+* CSS
 * Materialized
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Run the game
+## Install the game
 
-To run the game in development mode clone the repository and run
+For the installation node 12x or higher is required.
+
+Clone the repository and use 
+
+### `npm install`
+
+for the packages.
+
+To run the game use
 
 ### `npm start`
 
