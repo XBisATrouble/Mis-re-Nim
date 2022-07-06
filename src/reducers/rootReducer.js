@@ -1,6 +1,6 @@
 const initialState = {
   humanPlayer: true,
-  token: 13,
+  token: 20,
   winCondition: false,
   log: [],
   // Makes switch between win orientated and random computer possible

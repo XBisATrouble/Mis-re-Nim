@@ -25,6 +25,10 @@ class App extends React.Component {
     });
   }
 
+  handleResetClick() {
+    console.log(Date.now())
+  };
+
   createToken(token) {
     // Create tokens
     return [...Array(token).keys()].map((token) => {
@@ -38,12 +42,12 @@ class App extends React.Component {
     // Displays log entries, the current one at the top
     return log.map((logElement, index) => {
       const player = logElement.humanPlayer
-        ? "Menschlicher Spieler"
-        : "Computer";
-      const matches = logElement.n === 1 ? "Spielstein" : "Spielsteine";
+        ? "p1"
+        : "p2";
+      const matches = logElement.n === 1 ? "Stone" : "Stones";
       return (
         <span key={index}>
-          {player} hat {logElement.n} {matches} gezogen.
+          {player} have taken {logElement.n} {matches}.
         </span>
       );
     });
@@ -60,33 +64,35 @@ class App extends React.Component {
 
     return (
       <div className="App">
-        <h1>Nim Misère</h1>
-        <Switch
+        <h1>Pick Up Stones</h1>
+        <h3>Xubin Chen</h3>
+        <h3>1001991315</h3>
+        {/* <Switch
           id="Switch-11"
           offLabel="Törichter Computer"
           onChange={this.props.changeStrategy}
           onLabel="Cleverer Computer"
           checked={optimalStrategy}
-        />
+        /> */}
         <div className="container row">
           <div className="col s12">
             <div className="card-panel teal lighten-5">
               <span className="flow-text">
-                Verbleibende Spielsteine: {token}
+                Total Stones: {token}
               </span>
               <div className="token-wrapper">{this.createToken(token)}</div>
             </div>
           </div>
         </div>
-        <div className="button-wrapper">{this.createButtons(3, token)}</div>
+        <div className="button-wrapper">{this.createButtons(4, token)}</div>
         {winCondition ? (
           <div>
             <div className="text-grey-darken-4 flow-text">
-              {`Der${
-                humanPlayer ? " menschliche Spieler " : " Computer "
-              }hat gewonnen. Glückwunsch!`}
+              {`${
+                humanPlayer ? " p1 " : " p2 "
+              }won this game. Good Game!`}
             </div>
-            <Button onClick={() => this.props.resetGame()}>
+            <Button onClick={() => {this.props.resetGame(); this.handleResetClick()}}>
               {"Reset game"}
             </Button>
           </div>
