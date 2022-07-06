@@ -32,14 +32,14 @@ const renderer = ({ hours, minutes, seconds, completed }) => {
     // Render a countdown
     return (
       <span>COUNTDOWN :  
-        {hours}:{minutes}:{seconds}
+        {minutes}:{seconds}
       </span>
     );
   }
 };
 
 ReactDOM.render(
-  <Countdown date={Date.now() + 7200000} renderer={renderer} />,
+  <Countdown date={Date.now() + 120000} renderer={renderer} />,
   document.getElementById("count")
 );
 

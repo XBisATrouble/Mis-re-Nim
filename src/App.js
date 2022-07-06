@@ -42,8 +42,8 @@ class App extends React.Component {
     // Displays log entries, the current one at the top
     return log.map((logElement, index) => {
       const player = logElement.humanPlayer
-        ? "p1"
-        : "p2";
+        ? "You"
+        : "Bob";
       const matches = logElement.n === 1 ? "Stone" : "Stones";
       return (
         <span key={index}>
@@ -64,9 +64,10 @@ class App extends React.Component {
 
     return (
       <div className="App">
-        <h1>Pick Up Stones</h1>
-        <h3>Xubin Chen</h3>
-        <h3>1001991315</h3>
+        
+        <h3>Pick Up Stones</h3>
+        <h4>Xubin Chen</h4>
+        <h4>1001991315</h4>
         {/* <Switch
           id="Switch-11"
           offLabel="Törichter Computer"
@@ -89,7 +90,7 @@ class App extends React.Component {
           <div>
             <div className="text-grey-darken-4 flow-text">
               {`${
-                humanPlayer ? " p1 " : " p2 "
+                humanPlayer ? " p1 " : " Bob "
               }won this game. Good Game!`}
             </div>
             <Button onClick={() => {this.props.resetGame(); this.handleResetClick()}}>
